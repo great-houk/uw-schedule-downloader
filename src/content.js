@@ -1,7 +1,15 @@
 import { ics } from 'exports-loader?exports=ics!./ics.min.js';
 
-const SEMESTER_START = "2024-09-04";
-const SEMESTER_END = "2024-12-11";
+const SEM_STARTS = {
+   "1244": "2024-01-23", // Spring
+   "1246": "2024-06-17", // Summer
+   "1252": "2024-09-04", // Fall
+};
+const SEM_ENDS = {
+   "1244": "2024-05-03",
+   "1246": "2024-08-11",
+   "1252": "2024-12-11"
+};
 
 const button = '\
 <div id="schedule-download" class="d-flex">\
@@ -43,9 +51,13 @@ document.getElementById("schedule-download").addEventListener("click", function 
       }
    }
 
+   const SEMESTER_START = SEM_STARTS[data.termCode];
+   const SEMESTER_END = SEM_ENDS[data.termCode];
+
    console.log(data);
    var cal = ics();
 
+   // Add Classes
    for (const even of data.events) {
       // Get the class info
       const subject = even.title;
@@ -104,6 +116,23 @@ document.getElementById("schedule-download").addEventListener("click", function 
       cal.addEvent(subject, description, location, begin, end, rrule);
    }
 
+   // Add Exams
+   for (const course of data.courses) {
+      for (const exam of course.exams) {
+         // Begin and End
+         const begin = exam.start;
+         const end = exam.end;
+         // Subject and Description
+         const subject = course.subjectShortDesc + " " + course.catalogNumber + " Final";
+         const description = course.title + " Final";
+         // Location
+         const location = exam.online ? "Online" : exam.location;
+
+         cal.addEvent(subject, description, location, begin, end);
+      }
+   }
+
+   // Download
    (async () => {
       let url = URL.createObjectURL(new Blob([cal.build()], { type: 'text/calendar' }));
       await chrome.runtime.sendMessage(url);
