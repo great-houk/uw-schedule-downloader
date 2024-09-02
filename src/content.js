@@ -96,12 +96,12 @@ document.getElementById("schedule-download").addEventListener("click", function 
       }
       // Get days of week right
       const sem_start_day = new Date(SEMESTER_START + "T12:00:00-06:00").getDay();
-      if (begin.getDay() < sem_start_day) {
-         begin.setDate(begin.getDate() + 7 + begin.getDay() - sem_start_day);
-         end.setDate(end.getDate() + 7 + end.getDay() - sem_start_day);
+      if (date.getDay() < sem_start_day) {
+         begin.setDate(begin.getDate() + 7 + date.getDay() - sem_start_day);
+         end.setDate(end.getDate() + 7 + date.getDay() - sem_start_day);
       } else {
-         begin.setDate(begin.getDate() + begin.getDay() - sem_start_day);
-         end.setDate(end.getDate() + end.getDay() - sem_start_day);
+         begin.setDate(begin.getDate() + date.getDay() - sem_start_day);
+         end.setDate(end.getDate() + date.getDay() - sem_start_day);
       }
       // Repeat
       const ICAL_DAYS = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];

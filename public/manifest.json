@@ -1,7 +1,7 @@
 {
    "manifest_version": 3,
    "name": "UW Madison Schedule Downloader",
-   "version": "0.9.0",
+   "version": "0.9.1",
    "description": "Adds a download button to the schedule viewer page, allowing you to automatically import your schedule into any calendar",
    "icons": {
       "16": "icons/icon_16.png",
