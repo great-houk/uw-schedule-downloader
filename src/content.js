@@ -82,8 +82,8 @@ document.getElementById("schedule-download").addEventListener("click", function 
          }
       }
       // Start and end
-      const begin = new Date(SEMESTER_START + even.start.substring(10));
-      const end = new Date(SEMESTER_START + even.end.substring(10));
+      var begin = new Date(SEMESTER_START + even.start.substring(10));
+      var end = new Date(SEMESTER_START + even.end.substring(10));
       // Daylight savings :((
       function isDST(d) {
          let jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
